@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Signup</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background-color: #e6f2ff; /* Light Blue */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .signup-container {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      width: 370px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .signup-container:hover {
+      transform: scale(1.02);
+    }
+
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #1e40af;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: #fefefe;
+      box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #cce5ff, 0 0 10px #90cdf4;
+      transform: scale(1.02);
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #90cdf4, #60a5fa);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .signup-btn:hover {
+      background: linear-gradient(to right, #63b3ed, #3b82f6);
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .footer a {
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <h2>Teacher Signup</h2>
+    <form method="post" action="/signup/teacher">
+      <div class="input-group">
+        <label for="name">Name</label>
+        <input name="name" id="name" placeholder="Enter your name" required />
+      </div>
+
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input name="email" id="email" type="email" placeholder="Enter your email" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input name="password" id="password" type="password" placeholder="Enter your password" required />
+      </div>
+
+      <div class="input-group">
+        <label for="emp_id">Employee ID</label>
+        <input name="emp_id" id="emp_id" placeholder="e.g. EMP_01"  required />
+      </div>
+
+      <button class="signup-btn" type="submit">Signup</button>
+    </form>
+
+    <div class="footer">
+      Already have an account? <a href="/">Login</a>
+    </div>
+  </div>
+
+</body>
+</html>

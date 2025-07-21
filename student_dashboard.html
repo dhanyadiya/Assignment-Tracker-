@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #ffe6f0;
+      min-height: 100vh;
+      padding-top: 80px;
+      text-align: center;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(to right, #f472b6, #ec4899);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .navbar .logo {
+      font-weight: bold;
+    }
+
+    .navbar .icon-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .icon-links a {
+      text-decoration: none;
+      color: white;
+    }
+
+    .icon-links img {
+      width: 24px;
+      height: 24px;
+    }
+
+    h1 {
+      color: #9d174d;
+      font-size: 28px;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 250px;
+      transition: transform 0.3s ease;
+    }
+
+    .login-box:hover {
+      transform: scale(1.03);
+    }
+
+    .login-box img {
+      width: 80px;
+      margin-bottom: 15px;
+    }
+
+    .login-box h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .login-box a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(to right, #f9a8d4, #f472b6);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .login-box a:hover {
+      background: linear-gradient(to right, #ec4899, #db2777);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .close-btn:hover {
+      color: black;
+    }
+
+    .assignment {
+      text-align: left;
+      margin-bottom: 20px;
+      background: #fff0f6;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .assignment h3 {
+      color: #d63384;
+      margin-bottom: 5px;
+    }
+
+    .assignment p {
+      margin: 4px 0;
+    }
+
+    .submit-btn {
+      padding: 8px 16px;
+      background-color: #f472b6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .submit-btn:hover {
+      background-color: #db2777;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">Edutech - Student Dashboard</div>
+    <div class="icon-links">
+      <a href="/student/profile/{{ student.id }}" title="Profile">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/user-male-circle.png" alt="Profile" />
+      </a>
+      <a href="/" title="Logout">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/logout-rounded-left.png" alt="Logout" />
+      </a>
+    </div>
+  </div>
+
+  <h1>Welcome, {{ student.name }}!</h1>
+
+  <div class="container">
+    <!-- View Assignments Box -->
+    <div class="login-box">
+      <img src="https://img.icons8.com/color/96/task.png" alt="Assignments" />
+      <h2>View Assignments</h2>
+      <a href="javascript:void(0)" onclick="openModal()">Go</a>
+    </div>
+  </div>
+
+  <!-- Assignment Modal -->
+  <div id="assignmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>📚 Your Assignments</h2>
+      <div class="assignment-list">
+        {% if assignments|length == 0 %}
+          <p>No assignments available.</p>
+        {% else %}
+          {% for assignment in assignments %}
+            {% if assignment.assignment_type == 'file' %}
+              <div class="assignment">
+                <h3>{{ assignment.title }}</h3>
+                <p><strong>Class:</strong> {{ assignment.class_name }}</p>
+                <p><strong>Subject:</strong> {{ assignment.subject }}</p>
+                <p><a href="/{{ assignment.file_path }}" target="_blank">📄 View File</a></p>
+                <form action="/student/submit-assignment/{{ assignment.id }}/{{ student.id }}" method="POST" enctype="multipart/form-data">
+                  <label><strong>Browse File:</strong></label>
+                  <input type="file" name="submission_file" required>
+                  <button type="submit" class="submit-btn">Submit</button>
+                </form>
+              </div>
+              <hr />
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("assignmentModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("assignmentModal").style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      const modal = document.getElementById("assignmentModal");
+      if (event.target == modal) modal.style.display = "none";
+    };
+  </script>
+</body>
+</html>
