@@ -1,4 +1,5 @@
-# EdTech Assignment Tracker
+<img width="1910" height="1077" alt="Screenshot 2025-07-21 183926" src="https://github.com/user-attachments/assets/2576f3ae-90cc-454e-b429-ac1a8427a2ed" /># EdTech Assignment Tracker
+
 
 ## Overview
 
