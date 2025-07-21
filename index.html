@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Selection</title>
+  <style>
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffb3c6, #ade8f4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 40px; /* Add padding instead of absolute positioning */
+}
+
+h1 {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 32px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  transition: transform 0.3s ease;
+  color: black;
+}
+
+.login-box:hover {
+  transform: scale(1.03);
+}
+
+.login-box img {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 15px;
+}
+
+.login-box h2 {
+  margin-bottom: 10px;
+  color: black;
+}
+
+.login-box a {
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(to right, #f9a8d4, #90cdf4);
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.login-box a:hover {
+  background: linear-gradient(to right, #f472b6, #63b3ed);
+  transform: translateY(-2px);
+}
+
+.signup-link {
+  margin-top: 40px;
+  font-size: 16px;
+  color: #444;
+}
+
+.signup-link a {
+  color: #007BFF;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to Edutech-Assignment Tracker</h1>
+
+  <div class="container">
+    <div class="login-box">
+      <!-- Student in uniform -->
+    <img src="https://cdn-icons-png.flaticon.com/256/8663/8663461.png" alt="Student Sticker" width="150" height="150" />
+
+      <h2>Student Login</h2>
+      <a href="/login/student">Login</a>
+    </div>
+
+    <div class="login-box">
+      <!--  Teacher at blackboard -->
+      <img src="https://cdn-icons-png.flaticon.com/256/8686/8686118.png" alt="Teacher Sticker" />
+      <h2>Teacher Login</h2>
+      <a href="/login/teacher">Login</a>
+    </div>
+  </div>
+
+  <div class="signup-link">
+    <p>Don't have an account?</p>
+    <a href="/signup/student">Student Signup</a> |
+    <a href="/signup/teacher">Teacher Signup</a>
+  </div>
+
+</body>
+</html>

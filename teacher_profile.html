@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Profile</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background-color: #e0f7ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to right, #3b82f6, #2563eb);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      font-size: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .icon-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .icon-links a {
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .icon-links a:hover {
+      color: #ffeb3b;
+    }
+
+    .icon-links img {
+      width: 24px;
+      height: 24px;
+      transition: filter 0.3s;
+    }
+
+    .icon-links a:hover img {
+      filter: brightness(1.5);
+    }
+
+    .profile-container {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      padding: 40px;
+      width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #93c5fd;
+      margin: 0 auto 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-avatar img {
+      width: 60%;
+      height: auto;
+      border-radius: 50%;
+    }
+
+    .profile-container h2 {
+      margin-bottom: 30px;
+      color: #1e40af;
+    }
+
+    .info-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .info-group strong {
+      color: #1e3a8a;
+    }
+
+    .update-btn {
+      padding: 12px 30px;
+      background: linear-gradient(to right, #60a5fa, #3b82f6);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .update-btn:hover {
+      background: linear-gradient(to right, #2563eb, #1d4ed8);
+      transform: translateY(-2px);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.2);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 350px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .close-btn {
+      background: #ef4444;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .submit-btn {
+      background: #3b82f6;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: end;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">Edutech - Assignment Tracker</div>
+    <div class="icon-links">
+      <a href="/dashboard/teacher/{{ teacher.id }}" title="Home">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/home.png" alt="Home" />
+      </a>
+      <a href="/" title="Logout">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/logout-rounded-left.png" alt="Logout" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <div class="profile-avatar">
+      <img src="https://img.icons8.com/color/96/000000/teacher.png" class="avatar" alt="Teacher Avatar"/>
+    </div>
+
+    <h2>Teacher Profile</h2>
+
+    <div class="info-group"><strong>Name:</strong> {{ teacher.name }}</div>
+    <div class="info-group"><strong>Email:</strong> {{ teacher.email }}</div>
+    <div class="info-group"><strong>Employee ID:</strong> {{ teacher.emp_id }}</div>
+
+    <button class="update-btn" onclick="openModal()">Update Profile</button>
+  </div>
+
+  <!-- Modal Form -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <form method="post" action="/teacher/profile/{{ teacher.id }}">
+        <div class="input-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" value="{{ teacher.name }}" required>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" value="{{ teacher.email }}" required>
+        </div>
+
+        <div class="input-group">
+          <label for="emp_id">Employee ID</label>
+          <input type="text" id="emp_id" name="emp_id" value="{{ teacher.emp_id }}" required>
+        </div>
+
+        <div class="input-group">
+          <label for="password">New Password (optional)</label>
+          <input type="password" id="password" name="password" placeholder="Enter new password">
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="close-btn" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="submit-btn">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function openModal() {
+      document.getElementById("profileModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("profileModal").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

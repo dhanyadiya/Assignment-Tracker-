@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teacher Dashboard - Edutech</title>
+  <style>
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #e0f7ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: 60px;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to right, #3b82f6, #2563eb);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      font-size: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .icon-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .icon-links a {
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .icon-links a:hover {
+      color: #ffeb3b;
+    }
+
+    h1 {
+      margin-top: 100px;
+      font-size: 30px;
+      color: #1e3a8a;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(15px);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      width: 250px;
+      transition: transform 0.3s ease;
+      color: black;
+    }
+
+    .login-box:hover {
+      transform: scale(1.03);
+    }
+
+    .login-box img {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 15px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .login-box button {
+      padding: 10px 20px;
+      background: linear-gradient(to right, #60a5fa, #3b82f6);
+      color: white;
+      border-radius: 10px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .login-box button:hover {
+      background: linear-gradient(to right, #2563eb, #1d4ed8);
+      transform: translateY(-2px);
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      text-align: left;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+      color: #1e3a8a;
+    }
+
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .modal-content button.submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(to right, #60a5fa, #3b82f6);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .modal-content button.submit-btn:hover {
+      background: linear-gradient(to right, #2563eb, #1d4ed8);
+    }
+
+    .close {
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      color: #444;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: red;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+<script>
+  // Show alert if success query parameter exists
+  window.onload = function () {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("success") === "1") {
+      alert("Assignment created successfully!");
+    }
+  };
+</script>
+  <!-- Top Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">Edutech - Assignment Tracker</div>
+    <div class="icon-links">
+      <a href="/teacher/profile/{{ teacher.id }}"><img src="https://img.icons8.com/ios-filled/24/ffffff/user-male-circle.png" alt="Profile" /></a>
+      <a href="/"><img src="https://img.icons8.com/ios-filled/24/ffffff/logout-rounded-left.png" alt="Logout" /></a>
+    </div>
+  </div>
+
+  <h1>Welcome, {{ teacher.name }}!</h1>
+
+  <div class="container">
+    <!-- Create Assignment Box -->
+    <div class="login-box">
+      <img src="https://img.icons8.com/fluency/96/add-property.png" alt="Create Assignment Icon" />
+      <h2>Create Assignment</h2>
+      <button onclick="document.getElementById('createModal').style.display='block'">Open</button>
+    </div>
+
+    <!-- View Assignments Box -->
+    <div class="login-box">
+      <img src="https://img.icons8.com/fluency/96/view-details.png" alt="View Assignment Icon" />
+      <h2>View Assignments</h2>
+      <button onclick="document.getElementById('viewModal').style.display='block'">Open</button>
+    </div>
+  </div>
+
+  <!-- Create Assignment Modal -->
+  <div id="createModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('createModal').style.display='none'">&times;</span>
+      <h2>Create Assignment</h2>
+      <form method="POST" action="{{ url_for('create_assignment') }}" enctype="multipart/form-data">
+  <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
+        <label>Subject:</label>
+        <input type="text" name="subject" required>
+
+        <label>Class Name:</label>
+        <select name="class_name" required>
+          <option value="">--Select Class--</option>
+          {% for i in range(1, 11) %}
+            <option value="Class {{ i }}">Class {{ i }}</option>
+          {% endfor %}
+        </select>
+
+        <label>Assignment Title:</label>
+        <input type="text" name="title" placeholder="Enter Title" required>
+
+        <label>Upload File:</label>
+        <input type="file" name="file" required>
+
+        <input type="hidden" name="assignment_type" value="file">
+
+        <button type="submit" class="submit-btn">Submit Assignment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Assignments Modal -->
+  <div id="viewModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('viewModal').style.display='none'">&times;</span>
+      <h2>Submitted Assignments</h2>
+      <div>
+        {% for submission in submissions %}
+          <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:8px;">
+            <strong>Student:</strong> {{ submission.student_name }}<br>
+            <strong>Submitted On:</strong> {{ submission.date }}<br>
+            {% if submission.file_url %}
+              <strong>File:</strong> <a href="{{ submission.file_url }}" target="_blank">Download</a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Close modals when clicking outside of modal-content
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
